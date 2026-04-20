@@ -1,0 +1,19 @@
+{
+    "hist_labels": [1],
+    "hist_values": [2],
+    "nodes": [
+        { "id": 0, "label": "Vienna" },
+        { "id": 1, "label": "ColoradoSprings" }
+    ],
+    "edges": [{ "from": 0, "to": 1, "label": "127.8" }],
+    "nodes_view": [
+        {
+            "loc": { "id": "20", "name": "Vienna", "lat": "48.2088", "lon": "16.3726" },
+            "connections": [{ "id": "123", "delay": 127.84710416666667, "p2p_id": "-" }]
+        },
+        {
+            "loc": { "id": "123", "name": "ColoradoSprings", "lat": "38.8633", "lon": "-104.7919" },
+            "connections": [{ "id": "20", "delay": 128.08447916666668, "p2p_id": "-" }]
+        }
+    ]
+}

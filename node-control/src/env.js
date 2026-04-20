@@ -1,0 +1,1 @@
+export const HOSTNAME_PORT = `${window.location.hostname}:8000`;

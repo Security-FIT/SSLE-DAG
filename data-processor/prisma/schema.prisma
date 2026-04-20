@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Block {
+  hash         String        @id // keccak256 hash of [blockNumber, merkleRoot, authorId, createdAt] in this order
+  number       Int // this does not refer to actual order number as blockchain DAG structure may change but rather as an estimation
+  createdAt    DateTime      @default(now())
+  transactions Transaction[]
+  merkleRoot   String // keccak256 hash of all transactions implemented by go-merkletree
+  author       User          @relation(fields: [authorId], references: [id])
+  authorId     String
+}
+
+model Transaction {
+  hash        String   @id // keccak256 hash of [senderId, recipientId, amount, createdAt] in this order
+  createdAt   DateTime @default(now())
+  recipient   User     @relation(fields: [recipientId], references: [id], name: "Recipient")
+  recipientId String
+  sender      User     @relation(fields: [senderId], references: [id], name: "Sender")
+  senderId    String
+  amount      Int
+  Block       Block    @relation(fields: [blockId], references: [hash])
+  blockId     String
+}
+
+model User {
+  id                   String        @id // part of the keccak256 hash (40 chars)
+  username             String // web identifier
+  receivedTransactions Transaction[] @relation("Recipient")
+  sentTransactions     Transaction[] @relation("Sender")
+  blocks               Block[]
+}
